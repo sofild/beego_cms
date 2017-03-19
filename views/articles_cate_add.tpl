@@ -18,7 +18,7 @@
 					<div class="panel-heading">分类编辑</div>
 					<div class="panel-body">
 						<div class="col-md-12">
-							<form role="form" name="form1" id="form1" enctype="multipart/form-data" method="post" action="/articles/doadd">
+							<form role="form" name="form1" id="form1" enctype="multipart/form-data" method="post" action="/cate/doadd">
 							
 								<div class="form-group">
 									<label>分类名称</label>

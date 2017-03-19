@@ -67,10 +67,10 @@ func CateList(where map[string]string, order string, offset int, limit int) []or
 	var cond string = ""
 	var i int = 0
 	for k, v := range where {
-		cond += (k + "=" + v)
 		if i > 0 {
 			cond += " and "
 		}
+		cond += (k + "=" + v)
 		i++
 	}
 	sql += " " + cond
@@ -78,7 +78,32 @@ func CateList(where map[string]string, order string, offset int, limit int) []or
 	if limit > 0 {
 		sql += " limit " + strconv.Itoa(offset) + "," + strconv.Itoa(limit)
 	}
-	fmt.Println(sql)
+	//fmt.Println(sql)
 	o.Raw(sql).Values(&articles_cate)
 	return articles_cate
+}
+
+/*
+	通过分类ID获取分类名称
+*/
+func GetCateNames(cateIds []string) map[string]string {
+	var ids string = ""
+	for k, v := range cateIds {
+		if k > 0 {
+			ids += ","
+		}
+		ids += v
+	}
+	var sql string = fmt.Sprintf("select * from articles_cate where id in (%s) order by id desc", ids)
+	fmt.Println(sql)
+	o := orm.NewOrm()
+	var articles_cate []orm.Params
+	o.Raw(sql).Values(&articles_cate)
+	cates := make(map[string]string)
+	for _, v := range articles_cate {
+		id, _ := v["id"].(string)
+		name, _ := v["name"].(string)
+		cates[id] = name
+	}
+	return cates
 }

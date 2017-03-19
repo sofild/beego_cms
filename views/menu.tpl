@@ -6,8 +6,8 @@
 			</div>
 		</form>
 		<ul class="nav menu">
-			<li class="active"><a href="index.html"><span class="glyphicon glyphicon-dashboard"></span> 文章管理</a></li>
-			<li><a href="widgets.html"><span class="glyphicon glyphicon-th"></span> 分类管理</a></li>
+			<li class="active"><a href="/articles"><span class="glyphicon glyphicon-dashboard"></span> 文章管理</a></li>
+			<li><a href="/cate"><span class="glyphicon glyphicon-th"></span> 分类管理</a></li>
 			<li><a href="charts.html"><span class="glyphicon glyphicon-stats"></span> Charts</a></li>
 			<li><a href="tables.html"><span class="glyphicon glyphicon-list-alt"></span> Tables</a></li>
 			<li><a href="forms.html"><span class="glyphicon glyphicon-pencil"></span> Forms</a></li>

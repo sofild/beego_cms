@@ -47,6 +47,7 @@ func (c *CateController) Data() {
 		cate["name"] = name
 		cate["sort"] = sort
 		cate["time"] = tm.Format("2006-01-02 15:04:05")
+		cate["op"] = fmt.Sprintf("<a href='/cate/add/%s'>修改</a>&nbsp;&nbsp;<a href='/cate/del/%s'>删除</a>", id, id)
 
 		datas = append(datas, cate)
 	}

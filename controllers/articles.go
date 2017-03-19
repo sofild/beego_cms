@@ -34,8 +34,19 @@ func (c *ArticlesController) Data() {
 	var where map[string]string
 	articles := models.ArticleList(where, "modtime desc", perPage*(page-1), perPage)
 	var datas []map[string]string
-	fmt.Println(articles)
-	fmt.Println(len(articles))
+	//fmt.Println(articles)
+	//fmt.Println(len(articles))
+
+	//获取所有分类ID
+	var cate_ids []string
+	for _, v := range articles {
+		cate_id, _ := v["cate_id"].(string)
+		cate_ids = append(cate_ids, cate_id)
+	}
+	cates := models.GetCateNames(cate_ids)
+	fmt.Println(cates, cate_ids)
+
+	//格式化数据
 	for _, v := range articles {
 		//fmt.Println(v["pic"], v["modtime"])
 		imgUrl, _ := v["pic"].(string)
@@ -47,17 +58,18 @@ func (c *ArticlesController) Data() {
 		timestamp, _ := strconv.ParseInt(times, 10, 64)
 		tm := time.Unix(timestamp, 0)
 		article := make(map[string]string)
-		fmt.Println(v["modtime"])
+		//fmt.Println(v["modtime"])
 
 		article["id"] = id
 		article["title"] = title
-		article["cate_id"] = cate_id
+		article["cate_name"] = cates[cate_id]
 		article["imgUrl"] = "<img src=" + imgUrl + " width='50px' />"
 		article["time"] = tm.Format("2006-01-02 15:04:05")
+		article["op"] = fmt.Sprintf("<a href='/articles/add/%s'>修改</a>&nbsp;&nbsp;<a href='/articles/del/%s'>删除</a>", id, id)
 
 		datas = append(datas, article)
 	}
-	fmt.Println(datas)
+	//fmt.Println(datas)
 	data, err := json.Marshal(datas)
 	if err != nil {
 		beego.Info(err)
@@ -66,6 +78,21 @@ func (c *ArticlesController) Data() {
 }
 
 func (c *ArticlesController) Add() {
+	id := c.Ctx.Input.Param(":id")
+	aid, _ := strconv.ParseInt(id, 10, 64)
+
+	article := models.FindArticle(aid)
+	//content := models.FindContent(aid)
+
+	//fmt.Println(article, content)
+	//c.Data["Data"] = article
+	//var title string = article["title"]
+	fmt.Println(article["Title"])
+	//c.Data["Title"] = title
+	//c.Data["Description"] = article["description"]
+	//c.Data["Author"] = content["author"]
+	//c.Data["Source"] = content["source"]
+	//c.Data["Content"] = content["content"]
 	c.TplName = "articles_add.tpl"
 }
 
@@ -104,6 +131,11 @@ func (c *ArticlesController) DoAdd() {
 		}
 		c.Redirect("/articles", 302)
 	}
+}
+
+func (c *ArticlesController) Del() {
+	id := c.Ctx.Input.Param(":id")
+	c.Ctx.WriteString(id)
 }
 
 /*

@@ -18,7 +18,9 @@
 		<div class="row">
 			<div class="col-lg-12">
 				<div class="panel panel-default">
-					<div class="panel-heading">文章列表</div>
+					<div class="panel-heading">文章列表
+						<span class="icon pull-right"><a href="/articles/add" title="新增文章"><em class="glyphicon glyphicon-s glyphicon-plus"></em></a></span>
+					</div>
 					<div class="panel-body">
 						<table data-toggle="table" data-url="/articles/data"  data-show-refresh="true" data-show-toggle="true" data-show-columns="true" data-search="true" data-select-item-name="toolbar1" data-pagination="true" data-sort-name="name" data-sort-order="desc">
 						    <thead>
@@ -26,9 +28,10 @@
 						        <th data-field="id" data-checkbox="true" >ID</th>
 						        <th data-field="id" data-sortable="true">ID</th>
 						        <th data-field="title">标题</th>
-						        <th data-field="cate_id" data-sortable="true">分类</th>
+						        <th data-field="cate_name" data-sortable="true">分类</th>
 						        <th data-field="imgUrl">图片</th>
 						        <th data-field="time" data-sortable="true">更新时间</th>
+						        <th data-field="op">操作</th>
 						    </tr>
 						    </thead>
 						</table>

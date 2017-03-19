@@ -22,18 +22,18 @@
 							
 								<div class="form-group">
 									<label>标题</label>
-									<input name="title" id="title" class="form-control" placeholder="">
+									<input name="title" id="title" class="form-control" placeholder="" value="{{ .Data.Title }}">
 								</div>
 																
 								<div class="form-group">
 									<label>主图</label>
 									<input type="file" name="pic">
-									 <p class="help-block">jpg、gif、png  can be uploaded.</p>
+									<p class="help-block">jpg、gif、png  can be uploaded.</p>
 								</div>
 								
 								<div class="form-group">
 									<label>描述</label>
-									<textarea class="form-control" rows="3" name="description" id="description"></textarea>
+									<textarea class="form-control" rows="3" name="description" id="description">{{ .Description }}</textarea>
 								</div>
 
 								<div class="form-group">
@@ -48,17 +48,17 @@
 
 								<div class="form-group">
 									<label>作者</label>
-									<input name="author" id="author" class="form-control" placeholder="">
+									<input name="author" id="author" class="form-control" placeholder="" value="{{ .Author }}">
 								</div>
 
 								<div class="form-group">
 									<label>来源</label>
-									<input name="source" id="source" class="form-control" placeholder="">
+									<input name="source" id="source" class="form-control" placeholder="" value="{{ .Source }}">
 								</div>
 
 								<div class="form-group" style="height: 600px;">
 									<label>内容</label>
-									<textarea name="content" id="content" style="height:450px;"></textarea>
+									<textarea name="content" id="content" style="height:450px;">{{ .Content }}</textarea>
 								</div>
 
 								<div class="form-group">

@@ -64,13 +64,33 @@ func EditArticle(article Articles) bool {
 /*
 	获取单篇文章
 */
-func FindArticle(id int64) Articles {
+func FindArticle(id int64) map[string]string {
 	o := orm.NewOrm()
 	o.Using("default")
 
-	var articles Articles
-	o.QueryTable("articles").Filter("id", id).One(&articles)
-	return articles
+	var articles []orm.Params
+	o.QueryTable("articles").Filter("id", id).Values(&articles)
+	article := articles[0]
+
+	pic, _ := article["Pic"].(string)
+	times, _ := article["Modtime"].(string)
+	aid, _ := article["Id"].(string)
+	title, _ := article["Title"].(string)
+	cate_id, _ := article["CateId"].(string)
+	description, _ := article["Description"].(string)
+
+	timestamp, _ := strconv.ParseInt(times, 10, 64)
+	tm := time.Unix(timestamp, 0)
+	data := make(map[string]string)
+
+	data["id"] = aid
+	data["title"] = title
+	data["description"] = description
+	data["pic"] = pic
+	data["cate_id"] = cate_id
+	data["modtime"] = tm.Format("2006-01-02 15:04:05")
+	fmt.Println(data)
+	return data
 }
 
 /*
@@ -94,8 +114,7 @@ func ArticleList(where map[string]string, order string, offset int, limit int) [
 	sql += " limit " + strconv.Itoa(offset) + "," + strconv.Itoa(limit)
 	fmt.Println(sql)
 	//num, err := o.QueryTable("articles").ValuesList(&articles, "id", "title", "__modtime")
-	num, err := o.Raw(sql).Values(&articles)
-	fmt.Printf("print:%d, %s", num, err)
+	o.Raw(sql).Values(&articles)
 	return articles
 }
 
@@ -111,4 +130,26 @@ func AddContent(articleId int64, content string, author string, source string) (
 	articles_content.Source = source
 	id, err := o.Insert(articles_content)
 	return id, err
+}
+
+/*
+	获取单篇文章内容
+*/
+func FindContent(id int64) map[string]string {
+	o := orm.NewOrm()
+	o.Using("default")
+
+	var content []orm.Params
+	o.QueryTable("articles_content").Filter("article_id", id).Values(&content)
+
+	cont, _ := content[0]["Content"].(string)
+	author, _ := content[0]["Author"].(string)
+	source, _ := content[0]["Source"].(string)
+
+	data := make(map[string]string)
+
+	data["content"] = cont
+	data["author"] = author
+	data["source"] = source
+	return data
 }
