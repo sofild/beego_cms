@@ -72,12 +72,12 @@ func FindArticle(id int64) map[string]string {
 	o.QueryTable("articles").Filter("id", id).Values(&articles)
 	article := articles[0]
 
-	pic, _ := article["Pic"].(string)
-	times, _ := article["Modtime"].(string)
-	aid, _ := article["Id"].(string)
-	title, _ := article["Title"].(string)
-	cate_id, _ := article["CateId"].(string)
-	description, _ := article["Description"].(string)
+	pic := GetInterfaceValue(article["Pic"])
+	times := GetInterfaceValue(article["Modtime"])
+	aid := GetInterfaceValue(article["Id"])
+	title := GetInterfaceValue(article["Title"])
+	cate_id := GetInterfaceValue(article["CateId"])
+	description := GetInterfaceValue(article["Description"])
 
 	timestamp, _ := strconv.ParseInt(times, 10, 64)
 	tm := time.Unix(timestamp, 0)
@@ -89,7 +89,9 @@ func FindArticle(id int64) map[string]string {
 	data["pic"] = pic
 	data["cate_id"] = cate_id
 	data["modtime"] = tm.Format("2006-01-02 15:04:05")
+
 	fmt.Println(data)
+
 	return data
 }
 
@@ -152,4 +154,30 @@ func FindContent(id int64) map[string]string {
 	data["author"] = author
 	data["source"] = source
 	return data
+}
+
+/*
+	类型断言，获取interface的值
+*/
+func GetInterfaceValue(value interface{}) string {
+	var ret string
+	switch v := value.(type) {
+	case int:
+		var val int
+		val = v
+		ret = strconv.Itoa(val)
+	case string:
+		ret = v
+	case int64:
+		var val int64
+		val = v
+		ret = strconv.FormatInt(val, 10)
+	case int32:
+		var val int32
+		val = v
+		ret = strconv.FormatInt(int64(val), 10)
+	default:
+		ret = fmt.Sprintf("%s", value)
+	}
+	return ret
 }

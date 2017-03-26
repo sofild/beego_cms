@@ -24,7 +24,7 @@ func (c *CateController) Index() {
 	c.TplName = "articles_cate_list.tpl"
 }
 
-func (c *CateController) Data() {
+func (c *CateController) List() {
 	var page int = 1
 	var perPage int = 200
 	var where map[string]string

@@ -22,7 +22,7 @@
 						<span class="icon pull-right"><a href="/articles/add" title="新增文章"><em class="glyphicon glyphicon-s glyphicon-plus"></em></a></span>
 					</div>
 					<div class="panel-body">
-						<table data-toggle="table" data-url="/articles/data"  data-show-refresh="true" data-show-toggle="true" data-show-columns="true" data-search="true" data-select-item-name="toolbar1" data-pagination="true" data-sort-name="name" data-sort-order="desc">
+						<table data-toggle="table" data-url="/articles/list"  data-show-refresh="true" data-show-toggle="true" data-show-columns="true" data-search="true" data-select-item-name="toolbar1" data-pagination="true" data-sort-name="name" data-sort-order="desc">
 						    <thead>
 						    <tr>
 						        <th data-field="id" data-checkbox="true" >ID</th>

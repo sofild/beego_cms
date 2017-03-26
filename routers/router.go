@@ -14,13 +14,13 @@ func init() {
 	beego.Router("/user/logout", &controllers.UserController{}, "get:Logout")
 
 	beego.Router("/articles", &controllers.ArticlesController{}, "get:Index")
-	beego.Router("/articles/add/:id", &controllers.ArticlesController{}, "get:Add")
+	beego.Router("/articles/add/?:id", &controllers.ArticlesController{}, "get:Add")
 	beego.Router("/articles/doadd", &controllers.ArticlesController{}, "post:DoAdd")
-	beego.Router("/articles/data", &controllers.ArticlesController{}, "get:Data")
+	beego.Router("/articles/list", &controllers.ArticlesController{}, "get:List")
 	beego.Router("/articles/del/:id", &controllers.ArticlesController{}, "get:Del")
 
 	beego.Router("/cate", &controllers.CateController{}, "get:Index")
 	beego.Router("/cate/add", &controllers.CateController{}, "get:Add")
 	beego.Router("/cate/doadd", &controllers.CateController{}, "post:DoAdd")
-	beego.Router("/cate/data", &controllers.CateController{}, "get:Data")
+	beego.Router("/cate/list", &controllers.CateController{}, "get:List")
 }

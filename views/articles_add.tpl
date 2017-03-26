@@ -22,7 +22,7 @@
 							
 								<div class="form-group">
 									<label>标题</label>
-									<input name="title" id="title" class="form-control" placeholder="" value="{{ .Data.Title }}">
+									<input name="title" id="title" class="form-control" placeholder="" value="{{.Article.title}}">
 								</div>
 																
 								<div class="form-group">
@@ -33,32 +33,33 @@
 								
 								<div class="form-group">
 									<label>描述</label>
-									<textarea class="form-control" rows="3" name="description" id="description">{{ .Description }}</textarea>
+									<textarea class="form-control" rows="3" name="description" id="description">{{.Article.description}}</textarea>
 								</div>
 
 								<div class="form-group">
 									<label>分类</label>
-									<select class="form-control" name="cate_id">
-										<option value="1">分类 1</option>
-										<option value="2">分类 2</option>
-										<option value="3">分类 3</option>
-										<option value="4">分类 4</option>
+									{{$cateId := .Article.cate_id}}
+									<select class="form-control" name="cate_id" data="{{$cateId}}">
+									{{range $index,$value := .Cates}}
+									{{$cid := $value.id}}
+										<option value="{{$value.id}}">{{$value.name}}</option>
+									{{end}}	
 									</select>
 								</div>
 
 								<div class="form-group">
 									<label>作者</label>
-									<input name="author" id="author" class="form-control" placeholder="" value="{{ .Author }}">
+									<input name="author" id="author" class="form-control" placeholder="" value="{{.Content.author}}">
 								</div>
 
 								<div class="form-group">
 									<label>来源</label>
-									<input name="source" id="source" class="form-control" placeholder="" value="{{ .Source }}">
+									<input name="source" id="source" class="form-control" placeholder="" value="{{.Content.source}}">
 								</div>
 
 								<div class="form-group" style="height: 600px;">
 									<label>内容</label>
-									<textarea name="content" id="content" style="height:450px;">{{ .Content }}</textarea>
+									<textarea name="content" id="content" style="height:450px;">{{.Content.content}}</textarea>
 								</div>
 
 								<div class="form-group">

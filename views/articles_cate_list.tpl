@@ -23,7 +23,7 @@
 						<span class="icon pull-right"><a href="/cate/add" title="新增分类"><em class="glyphicon glyphicon-s glyphicon-plus"></em></a></span>	
 					</div>
 					<div class="panel-body">
-						<table data-toggle="table" data-url="/cate/data"  data-show-refresh="true" data-show-toggle="true" data-show-columns="true" data-search="true" data-select-item-name="toolbar1" data-pagination="true" data-sort-name="name" data-sort-order="desc">
+						<table data-toggle="table" data-url="/cate/list"  data-show-refresh="true" data-show-toggle="true" data-show-columns="true" data-search="true" data-select-item-name="toolbar1" data-pagination="true" data-sort-name="name" data-sort-order="desc">
 						    <thead>
 						    <tr>
 						        <th data-field="id" data-checkbox="true" >ID</th>

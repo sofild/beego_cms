@@ -28,7 +28,7 @@ func (c *ArticlesController) Index() {
 	c.TplName = "articles_list.tpl"
 }
 
-func (c *ArticlesController) Data() {
+func (c *ArticlesController) List() {
 	var page int = 1
 	var perPage int = 200
 	var where map[string]string
@@ -80,19 +80,16 @@ func (c *ArticlesController) Data() {
 func (c *ArticlesController) Add() {
 	id := c.Ctx.Input.Param(":id")
 	aid, _ := strconv.ParseInt(id, 10, 64)
+	if aid > 0 {
+		article := models.FindArticle(aid)
+		c.Data["Article"] = article
 
-	article := models.FindArticle(aid)
-	//content := models.FindContent(aid)
-
-	//fmt.Println(article, content)
-	//c.Data["Data"] = article
-	//var title string = article["title"]
-	fmt.Println(article["Title"])
-	//c.Data["Title"] = title
-	//c.Data["Description"] = article["description"]
-	//c.Data["Author"] = content["author"]
-	//c.Data["Source"] = content["source"]
-	//c.Data["Content"] = content["content"]
+		content := models.FindContent(aid)
+		c.Data["Content"] = content
+	}
+	var where map[string]string
+	cates := models.CateList(where, "id asc", 0, 0)
+	c.Data["Cates"] = cates
 	c.TplName = "articles_add.tpl"
 }
 
