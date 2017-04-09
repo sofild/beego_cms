@@ -6,9 +6,10 @@
 			</div>
 		</form>
 		<ul class="nav menu">
-			<li class="active"><a href="/articles"><span class="glyphicon glyphicon-dashboard"></span> 文章管理</a></li>
-			<li><a href="/cate"><span class="glyphicon glyphicon-th"></span> 分类管理</a></li>
-			<li><a href="/spider"><span class="glyphicon glyphicon-stats"></span> 采集器管理</a></li>
+			<li {{ if eq .MenuName "article" }}class="active"{{ end }}><a href="/articles"><span class="glyphicon glyphicon-dashboard"></span> 文章管理</a></li>
+			<li {{ if eq .MenuName "cate" }}class="active"{{ end }}><a href="/cate"><span class="glyphicon glyphicon-th"></span> 分类管理</a></li>
+			<li {{ if eq .MenuName "spider" }}class="active"{{ end }}><a href="/spider"><span class="glyphicon glyphicon-stats"></span> 采集器管理</a></li>
+			<!--
 			<li><a href="tables.html"><span class="glyphicon glyphicon-list-alt"></span> Tables</a></li>
 			<li><a href="forms.html"><span class="glyphicon glyphicon-pencil"></span> Forms</a></li>
 			<li><a href="panels.html"><span class="glyphicon glyphicon-info-sign"></span> Alerts &amp; Panels</a></li>
@@ -34,6 +35,7 @@
 					</li>
 				</ul>
 			</li>
+			-->
 			<li role="presentation" class="divider"></li>
 		</ul>
 		<div class="attribution"></div>

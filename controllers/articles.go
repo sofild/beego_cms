@@ -24,6 +24,10 @@ type Articles struct {
 	Content     string `form:"content"`
 }
 
+func (c *ArticlesController) Prepare() {
+	c.Data["MenuName"] = "article"
+}
+
 func (c *ArticlesController) Index() {
 	c.TplName = "articles_list.tpl"
 }
@@ -44,7 +48,7 @@ func (c *ArticlesController) List() {
 		cate_ids = append(cate_ids, cate_id)
 	}
 	cates := models.GetCateNames(cate_ids)
-	fmt.Println(cates, cate_ids)
+	//fmt.Println(cates, cate_ids)
 
 	//格式化数据
 	for _, v := range articles {
@@ -96,23 +100,6 @@ func (c *ArticlesController) Add() {
 
 func (c *ArticlesController) DoAdd() {
 	articles := Articles{}
-	f, h, err := c.GetFile("pic")
-	defer f.Close()
-	if err != nil {
-		beego.Info(err)
-		c.Redirect("/articles/add", 302)
-	} else {
-		path, absPath := getUplodDir()
-		var pic string = path + h.Filename
-		var picPath string = absPath + h.Filename
-
-		fmt.Println(h.Filename)
-		fmt.Println(picPath)
-
-		c.SaveToFile("pic", picPath)
-		articles.Pic = pic
-	}
-
 	if err := c.ParseForm(&articles); err != nil {
 		beego.Info(err)
 	} else {
@@ -132,26 +119,25 @@ func (c *ArticlesController) DoAdd() {
 }
 
 func (c *ArticlesController) Del() {
-	id := c.Ctx.Input.Param(":id")
-	c.Ctx.WriteString(id)
+	aid := c.Ctx.Input.Param(":id")
+	id, _ := strconv.ParseInt(aid, 10, 64)
+	models.DelArticle(id)
+	models.DelContent(id)
+	c.Redirect("/articles", 302)
 }
 
 /*
 	文件上传
 */
 func (c *ArticlesController) Upload() {
-	fmt.Println("0x")
-	f, h, err := c.GetFile("pic")
-	fmt.Println("1x", h.Filename)
+	f, h, err := c.GetFile("upload")
 	defer f.Close()
 	data := make(map[string]string)
 	if err != nil {
-		fmt.Println("1:", err)
+		fmt.Println(err)
 		data["msg"] = "上传失败，请重新操作！"
 		data["status"] = "1001"
-		fmt.Println("2x")
 	} else {
-		fmt.Println("3x")
 		path, absPath := getUplodDir()
 		var pic string = path + h.Filename
 		var picPath string = absPath + h.Filename
@@ -159,15 +145,14 @@ func (c *ArticlesController) Upload() {
 		fmt.Println(h.Filename)
 		fmt.Println(picPath)
 
-		c.SaveToFile("pic", picPath)
+		c.SaveToFile("upload", picPath)
 		data["msg"] = "上传成功！"
 		data["status"] = "1000"
 		data["pic"] = pic
 	}
-	fmt.Println("4x")
 	output, errs := json.Marshal(data)
 	if errs != nil {
-		fmt.Println("2:", errs)
+		fmt.Println(errs)
 	}
 	c.Ctx.WriteString(string(output))
 }

@@ -26,6 +26,10 @@ type Spider struct {
 	Pic     string `form:"pic"`
 }
 
+func (c *SpiderController) Prepare() {
+	c.Data["MenuName"] = "spider"
+}
+
 func (c *SpiderController) Index() {
 	c.TplName = "spider_list.tpl"
 }

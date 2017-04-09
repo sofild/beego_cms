@@ -20,6 +20,10 @@ type Cate struct {
 	Sort     int32  `form:"sort"`
 }
 
+func (c *CateController) Prepare() {
+	c.Data["MenuName"] = "cate"
+}
+
 func (c *CateController) Index() {
 	c.TplName = "articles_cate_list.tpl"
 }

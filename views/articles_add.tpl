@@ -18,8 +18,7 @@
 					<div class="panel-heading">文章编辑</div>
 					<div class="panel-body">
 						<div class="col-md-12">
-							<form role="form" name="form1" id="form1" enctype="multipart/form-data" method="post" action="/articles/doadd">
-							
+							<form role="form" name="form1" id="form1" method="post" action="/articles/doadd">
 								<div class="form-group">
 									<label>标题</label>
 									<input name="title" id="title" class="form-control" placeholder="" value="{{.Article.title}}">
@@ -27,7 +26,7 @@
 																
 								<div class="form-group">
 									<label>主图</label>
-									<input type="file" name="upload" id="upload" runat="server" onChange="uploadImage()">
+									<p><input type="button" name="uploadBtn" id="uploadBtn" value="选择图片" onclick="selectImage()" /></p>
 									<input type="hidden" name="pic" id="pic" value="{{.Article.pic}}" />
 									<p class="help-block">jpg、gif、png  can be uploaded.</p>
 									<p id="imgShow">
@@ -91,7 +90,14 @@
     	var ue = UE.getEditor('content');
 
 
-		function uploadImage() {
+		function selectImage() {
+			//构建上传的表单
+            var formHtml = '<form id="uploadForm" name="uploadForm" method="post" enctype="multipart/form-data"><input type="file" name="upload" id="upload" width="0px" height="0px" onChange="uploadImage()" /></form>';
+            $("body").append(formHtml);
+            $("#upload").click();
+        }
+
+        function uploadImage(){
         	//判断是否有选择上传文件
             var imgPath = $("#upload").val();
             if (imgPath == "") {
@@ -105,24 +111,19 @@
                 alert("请选择图片文件");
                 return;
             }
-            //构建上传的表单
-            var fileInput = $("#upload").clone().prop("outerHTML");
-            var formHtml = '<form id="uploadForm" name="uploadForm" method="post" enctype="multipart/form-data"><input type="file" name="upload" value="'+imgPath+'" width="0px" height="0px" /></form>';
-            $("body").append(formHtml);
-            console.log(formHtml);
-            //
             //异步上传
             $("#uploadForm").ajaxSubmit({
                 type: "POST",
                 url: "/articles/upload",
                 cache: false,
+                dataType: "json",
                 success: function(data) {
                 	$("#uploadForm").remove();
                 	var status = parseInt(data.status)
                     if(status==1000){
                     	$("#pic").val(data.pic)
                     	$("#imgShow").html('<img src="'+data.pic+'" width="100px" height="100px" />')
-                    	alert(data.msg)
+                    	//alert(data.msg)
                     }
                     else{
                     	alert(data.msg)

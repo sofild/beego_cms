@@ -121,6 +121,20 @@ func ArticleList(where map[string]string, order string, offset int, limit int) [
 }
 
 /*
+	删除文章
+*/
+func DelArticle(id int64) bool {
+	o := orm.NewOrm()
+	if num, err := o.Delete(&Articles{Id: id}); err == nil {
+		if num > 0 {
+			return true
+		}
+		return false
+	}
+	return false
+}
+
+/*
 	新增文章内容
 */
 func AddContent(articleId int64, content string, author string, source string) (int64, error) {
@@ -181,4 +195,18 @@ func GetInterfaceValue(value interface{}) string {
 		ret = fmt.Sprintf("%s", value)
 	}
 	return ret
+}
+
+/*
+	删除文章内容
+*/
+func DelContent(id int64) bool {
+	o := orm.NewOrm()
+	if num, err := o.Delete(&ArticlesContent{ArticleId: id}); err == nil {
+		if num > 0 {
+			return true
+		}
+		return false
+	}
+	return false
 }

@@ -87,8 +87,9 @@ func CateList(where map[string]string, order string, offset int, limit int) []or
 	通过分类ID获取分类名称
 */
 func GetCateNames(cateIds []string) map[string]string {
+	cid := RemoveDuplicatesAndEmpty(cateIds)
 	var ids string = ""
-	for k, v := range cateIds {
+	for k, v := range cid {
 		if k > 0 {
 			ids += ","
 		}
@@ -123,3 +124,17 @@ func GetCates(parentId int) []map[string]string {
 	}
 }
 */
+
+/*
+	去除重复和空的值
+*/
+func RemoveDuplicatesAndEmpty(a []string) (ret []string) {
+	a_len := len(a)
+	for i := 0; i < a_len; i++ {
+		if (i > 0 && a[i-1] == a[i]) || len(a[i]) == 0 {
+			continue
+		}
+		ret = append(ret, a[i])
+	}
+	return
+}
