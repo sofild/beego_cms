@@ -18,9 +18,15 @@ func init() {
 	beego.Router("/articles/doadd", &controllers.ArticlesController{}, "post:DoAdd")
 	beego.Router("/articles/list", &controllers.ArticlesController{}, "get:List")
 	beego.Router("/articles/del/:id", &controllers.ArticlesController{}, "get:Del")
+	beego.Router("/articles/upload", &controllers.ArticlesController{}, "post:Upload")
 
 	beego.Router("/cate", &controllers.CateController{}, "get:Index")
 	beego.Router("/cate/add", &controllers.CateController{}, "get:Add")
 	beego.Router("/cate/doadd", &controllers.CateController{}, "post:DoAdd")
 	beego.Router("/cate/list", &controllers.CateController{}, "get:List")
+
+	beego.Router("/spider", &controllers.SpiderController{}, "get:Index")
+	beego.Router("/spider/list", &controllers.SpiderController{}, "get:List")
+	beego.Router("/spider/add", &controllers.SpiderController{}, "get:Add")
+	beego.Router("/spider/doadd", &controllers.SpiderController{}, "post:DoAdd")
 }

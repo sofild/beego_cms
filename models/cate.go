@@ -107,3 +107,19 @@ func GetCateNames(cateIds []string) map[string]string {
 	}
 	return cates
 }
+
+/*
+	获取所有分类
+*/
+/*
+func GetCates(parentId int) []map[string]string {
+	var parent_id string = strconv.Itoa(parentId)
+	where := make(map[string]string)
+	where["parent_id"] = parent_id
+	order := "id asc"
+	cates = CateList(where, order, 0, 100)
+	for v, _ := range cates {
+
+	}
+}
+*/

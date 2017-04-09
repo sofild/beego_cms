@@ -17,6 +17,7 @@ func init() {
 	orm.RegisterModel(new(Articles))
 	orm.RegisterModel(new(ArticlesContent))
 	orm.RegisterModel(new(ArticlesCate))
+	orm.RegisterModel(new(Spider))
 	//数据库连接
 	var mysql_host string = beego.AppConfig.String("mysql_host")
 	var mysql_port string = beego.AppConfig.String("mysql_port")

@@ -143,14 +143,15 @@ func FindContent(id int64) map[string]string {
 
 	var content []orm.Params
 	o.QueryTable("articles_content").Filter("article_id", id).Values(&content)
+	cont := content[0]
 
-	cont, _ := content[0]["Content"].(string)
-	author, _ := content[0]["Author"].(string)
-	source, _ := content[0]["Source"].(string)
+	conts := GetInterfaceValue(cont["Content"])
+	author := GetInterfaceValue(cont["Author"])
+	source := GetInterfaceValue(cont["Source"])
 
 	data := make(map[string]string)
 
-	data["content"] = cont
+	data["content"] = conts
 	data["author"] = author
 	data["source"] = source
 	return data

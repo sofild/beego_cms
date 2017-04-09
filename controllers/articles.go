@@ -85,6 +85,7 @@ func (c *ArticlesController) Add() {
 		c.Data["Article"] = article
 
 		content := models.FindContent(aid)
+		//fmt.Println(content)
 		c.Data["Content"] = content
 	}
 	var where map[string]string
@@ -133,6 +134,42 @@ func (c *ArticlesController) DoAdd() {
 func (c *ArticlesController) Del() {
 	id := c.Ctx.Input.Param(":id")
 	c.Ctx.WriteString(id)
+}
+
+/*
+	文件上传
+*/
+func (c *ArticlesController) Upload() {
+	fmt.Println("0x")
+	f, h, err := c.GetFile("pic")
+	fmt.Println("1x", h.Filename)
+	defer f.Close()
+	data := make(map[string]string)
+	if err != nil {
+		fmt.Println("1:", err)
+		data["msg"] = "上传失败，请重新操作！"
+		data["status"] = "1001"
+		fmt.Println("2x")
+	} else {
+		fmt.Println("3x")
+		path, absPath := getUplodDir()
+		var pic string = path + h.Filename
+		var picPath string = absPath + h.Filename
+
+		fmt.Println(h.Filename)
+		fmt.Println(picPath)
+
+		c.SaveToFile("pic", picPath)
+		data["msg"] = "上传成功！"
+		data["status"] = "1000"
+		data["pic"] = pic
+	}
+	fmt.Println("4x")
+	output, errs := json.Marshal(data)
+	if errs != nil {
+		fmt.Println("2:", errs)
+	}
+	c.Ctx.WriteString(string(output))
 }
 
 /*
